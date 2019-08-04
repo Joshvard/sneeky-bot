@@ -1,0 +1,16 @@
+{
+  "name": "sneeky_bot",
+  "version": "1.0.0",
+  "description": "Sneeky bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Ruff",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "mysql": "^2.17.1"
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "command_info" : {
+        "test" : {
+            "description" : "Simple test command, returns 'pong' to the caller."
+        }
+    }
+}

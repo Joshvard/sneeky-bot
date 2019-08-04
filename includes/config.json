@@ -1,0 +1,16 @@
+{
+    "prefix"  : "&",
+    "token"   : "<put your client token here for testing>",
+    "db_name" : "sneekybot",
+    "db_host" : "localhost",
+    "db_user" : "root",
+    "db_pass" : "",
+    "testmode": false,
+    "client"  : {
+        "id"     : "<insert your bot id here>",
+        "secret" : "<insert your bot client secret here>"
+    },
+    "author"  : {
+        "id"     : "<insert your discord id here (right click your icon in chat in developer mode and copy id)>"
+    }
+}
