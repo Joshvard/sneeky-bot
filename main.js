@@ -40,9 +40,13 @@ class ProgramHandler{
         // Someone is attempting a command, clean the string and verify the command exists
         // We shall execute the command if it does exist
         this.client.on('message', message => {
-            if(message.content.startsWith(this.config.prefix) && message.content.length !== 1){
-                let user_command = message.content.replace(this.config.prefix, '');
-                this.commands.launch_command(user_command, message);
+            if(message.content.startsWith(this.config.prefix) && message.content.length !== 1 && message.author.id !== this.config.client.id){
+                message.content.replace(this.config.prefix,'');
+                if(this.config.testmode && message.author.id !== "161585838508081153"){
+                    message.channel.send("You're not Rive, bye bye :D");
+                } else{
+                    this.commands.launch_command(message.content.replace(this.config.prefix, ''), message);
+                }
             }
         });
     }
