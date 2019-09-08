@@ -45,7 +45,7 @@ class Cmd{
             case 'donate':
                 this.casino.donate();
                 break;
-                
+
             case 'scavenge':
                 this.casino.scavenge();
                 break;
@@ -55,7 +55,7 @@ class Cmd{
     // Run and execute the appropriate casino command if valid
     // Or else we terminate the command and hopefully explain why
     async run(){
-        if(this.casino.check_player_exists(this.user.id)){
+        if(!this.casino.check_player_exists(this.user.id)){
             register.set_user_data({name: this.message.author.username, discord_id: this.message.author.id});
             register.run();
         } else {
