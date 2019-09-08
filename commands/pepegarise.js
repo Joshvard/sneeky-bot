@@ -33,7 +33,7 @@ class Cmd {
 
         if(args){
             await this.pepegarise(args).then((pepegarised_str) => {
-                this.message.channel.send(pepegarised_str);
+                this.message.channel.send(`<@228948689253564417> ${pepegarised_str}`);
             }); 
         } else {
             this.message.channel.send(`There was an error with your parameters!\nUse '${this.command.config.prefix}help' to find out how to use this command.`)
