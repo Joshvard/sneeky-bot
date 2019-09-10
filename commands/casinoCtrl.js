@@ -31,15 +31,55 @@ class Cmd{
         this.user.discord_id = user.discord_id;
     }
 
-    // Set and prepare our casino command, ready for logic testing
-    set_control(mode){
-        this.mode = mode;
+    // Set and prepare our casino command, store the extra parameters for processing
+    set_params(params){
+        this.mode = params[0];
+        params.shift();
+        this.params = params;
+    }
+
+    check_parameters(expected_param_count, expected_params, params){
+        let check_state = true;
+        
+        if(expected_param_count !== params.length){
+            throw `<@${this.user.discord_id}> Too many parameters were provided!\n
+                    Please use &help if you are unsure how to use this command.`;
+        }
+
+        expected_params.forEach((val, i) => {
+            if(!params.indexOf(val)){
+                throw `<@${this.user.discord_id}> Expected parameter(s) was not provided!\n
+                    Please use &help if you are unsure how to use this command.`;
+            }
+        });
+
+        return check_state;
     }
 
     async launch_casino(mode){
         switch(mode){
             case 'play':
-                this.casino.play();
+                try{
+                    this.casino.check_parameters(2, ['play'], this.params);
+
+                    if(Number.isInteger(this.params[2])){
+                        if(this.params < 0){
+                            throw `<@${this.user.discord_id}> You must bet over 0 to play!\n
+                                If you have no money, ask a friend for a donation or use &scavenge (On a cooldown).`;
+                        }
+                    } else {
+                        throw `<@${this.user.discord_id}> Your parameters are incorrect!\n
+                        The correct use of this command is &casino play *numerical value you wish to bet*`;
+                    }
+
+                    this.casino.play(this.user.discord_id);
+                } catch(error){
+                    this.message.channel.send(error.message);
+                }
+                break;
+
+            case 'balance':
+                this.casino.balance();
                 break;
 
             case 'donate':
@@ -59,11 +99,7 @@ class Cmd{
             register.set_user_data({name: this.message.author.username, discord_id: this.message.author.id});
             register.run();
         } else {
-            try{
-                await this.launch_casino(this.mode);
-            } catch(error){
-                this.message.channel.send(`<@${this.user.discord_id}> ${error.message}`);
-            }
+            await this.launch_casino(this.mode);
         }
     }
 }
