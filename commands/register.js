@@ -2,7 +2,7 @@
 
 class Cmd{
 
-    constructor(database, message){
+    constructor(database, message, suppress = false){
         this.database = database;
         this.message = message;
         this.connection;
@@ -11,6 +11,9 @@ class Cmd{
             name: "",
             discord_id: ""
         };
+
+        // Suppresses channel messages to the user for this package (allowed by default, doesn't apply to critical errors)
+        this.suppress = suppress;
     }
 
     set_user_data(user){
@@ -31,7 +34,10 @@ class Cmd{
             let result = await this.database.db_query(this.connection, `SELECT users_id FROM users WHERE users_discord_id = ${this.user.discord_id}`);
 
             if(result.length > 0){
-                this.message.channel.send('You already exist in the system.');
+                if(!suppress){
+                    this.message.channel.send(`<@${this.user.discord_id}> You already exist in the system.`);
+                }
+
                 return false;
             }
         } catch(error){
@@ -48,7 +54,9 @@ class Cmd{
                 ${this.message.author.id}
             )`);
 
-            this.message.channel.send('You have successfully been registered!');
+            if(!suppress){
+                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
+            }
         } catch(error){
             this.message.channel.send(`Insertion query executed with a failure: ${error.message}`);
             return false;
