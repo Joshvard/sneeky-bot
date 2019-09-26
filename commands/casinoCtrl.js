@@ -26,6 +26,7 @@ class Cmd{
         this.casino = new casino_load(this.database, this.message);
     }
 
+    // Set the user data for the module
     set_user_data(user){
         this.user.name = user.name;
         this.user.discord_id = user.discord_id;
@@ -38,23 +39,13 @@ class Cmd{
         this.params = params;
     }
 
-    check_parameters(expected_param_count, params){
-        let check_state = true;
-        
-        if(expected_param_count < params.length){
-            throw `<@${this.user.discord_id}> Too many parameters were provided!\nPlease use &help if you are unsure how to use this command.`;
-        } else if(expected_param_count > params.length){
-            throw `<@${this.user.discord_id}> Not enough parameters were provided!\nPlease use &help if you are unsure how to use this command.`;
-        }
-
-        return check_state;
-    }
-
+    // Similar behaviour for command handling
+    // The first parameter found should always be the 'secondary command' (mode) followed by the parameters required
     async launch_casino(mode){
         switch(mode){
             case 'play':
                 try{
-                    this.check_parameters(1, this.params);
+                    this.command.check_parameters(1, this.params);
 
                     let bet = parseInt(this.params[0]);
 
