@@ -27,6 +27,7 @@ class Cmd{
             this.connection = await this.database.db_connect();
         } catch(error){
             this.message.channel.send(`There was a problem with the database connection, please contact the bot administrator.`);
+            console.log(error);
             return false;
         }
 
@@ -34,7 +35,7 @@ class Cmd{
             let result = await this.database.db_query(this.connection, `SELECT users_id FROM users WHERE users_discord_id = ${this.user.discord_id}`);
 
             if(result.length > 0){
-                if(!suppress){
+                if(!this.suppress){
                     this.message.channel.send(`<@${this.user.discord_id}> You already exist in the system.`);
                 }
 
@@ -42,6 +43,7 @@ class Cmd{
             }
         } catch(error){
             this.message.channel.send('There was a problem with the database operation, please contact the bot administrator.');
+            console.log(error);
             return false;
         }
 
@@ -54,11 +56,28 @@ class Cmd{
                 ${this.message.author.id}
             )`);
 
-            if(!suppress){
+            if(!this.suppress){
                 this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
             }
         } catch(error){
-            this.message.channel.send(`Insertion query executed with a failure: ${error.message}`);
+            this.message.channel.send(`Insertion query executed with a failure: ${error}`);
+            return false;
+        }
+
+        try{
+            await this.database.db_query(this.connection, `INSERT INTO casino(
+                users_discord_id,
+                casino_credits
+            )VALUES(
+                ${this.message.author.id},
+                500
+            )`);
+
+            if(!this.suppress){
+                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
+            }
+        } catch(error){
+            this.message.channel.send(`Insertion query executed with a failure: ${error}`);
             return false;
         }
     }

@@ -23,7 +23,7 @@ class Cmd{
         };
 
         let casino_load = require('../lib/casino.js');
-        this.casino = new casino_load(this.database);
+        this.casino = new casino_load(this.database, this.message);
     }
 
     set_user_data(user){
@@ -38,20 +38,14 @@ class Cmd{
         this.params = params;
     }
 
-    check_parameters(expected_param_count, expected_params, params){
+    check_parameters(expected_param_count, params){
         let check_state = true;
         
-        if(expected_param_count !== params.length){
-            throw `<@${this.user.discord_id}> Too many parameters were provided!\n
-                    Please use &help if you are unsure how to use this command.`;
+        if(expected_param_count < params.length){
+            throw `<@${this.user.discord_id}> Too many parameters were provided!\nPlease use &help if you are unsure how to use this command.`;
+        } else if(expected_param_count > params.length){
+            throw `<@${this.user.discord_id}> Not enough parameters were provided!\nPlease use &help if you are unsure how to use this command.`;
         }
-
-        expected_params.forEach((val, i) => {
-            if(!params.indexOf(val)){
-                throw `<@${this.user.discord_id}> Expected parameter(s) was not provided!\n
-                    Please use &help if you are unsure how to use this command.`;
-            }
-        });
 
         return check_state;
     }
@@ -60,26 +54,26 @@ class Cmd{
         switch(mode){
             case 'play':
                 try{
-                    this.casino.check_parameters(2, ['play'], this.params);
+                    this.check_parameters(1, this.params);
 
-                    if(Number.isInteger(this.params[2])){
-                        if(this.params < 0){
-                            throw `<@${this.user.discord_id}> You must bet over 0 to play!\n
-                                If you have no money, ask a friend for a donation or use &scavenge (On a cooldown).`;
+                    let bet = parseInt(this.params[0]);
+
+                    if(Number.isInteger(bet)){
+                        if(bet <= 0){
+                            throw `<@${this.user.discord_id}> You must bet over 0 to play!\nIf you have no money, ask a friend for a donation or use &scavenge (On a cooldown).`;
                         }
                     } else {
-                        throw `<@${this.user.discord_id}> Your parameters are incorrect!\n
-                        The correct use of this command is &casino play *numerical value you wish to bet*`;
+                        throw `<@${this.user.discord_id}> Your parameters are incorrect!\nThe correct use of this command is &casino play (*numerical value you wish to bet*)`;
                     }
 
-                    this.casino.play(this.user.discord_id);
+                    this.casino.play(this.user, bet);
                 } catch(error){
-                    this.message.channel.send(error.message);
+                    this.message.channel.send(error);
                 }
                 break;
 
             case 'balance':
-                this.casino.balance();
+                this.casino.balance(this.user);
                 break;
 
             case 'donate':
@@ -87,7 +81,11 @@ class Cmd{
                 break;
 
             case 'scavenge':
-                this.casino.scavenge();
+                this.casino.scavenge(this.user);
+                break;
+
+            default:
+                this.message.channel.send(`<@${this.user.discord_id}> '${mode}' is not a valid casino command.\n\nPlease use '&help' if you are unsure how to use this command.`);
                 break;
         }
     }
@@ -95,9 +93,13 @@ class Cmd{
     // Run and execute the appropriate casino command if valid
     // Or else we terminate the command and hopefully explain why
     async run(){
-        if(!this.casino.check_player_exists(this.user.id)){
-            register.set_user_data({name: this.message.author.username, discord_id: this.message.author.id});
+        if(!await this.casino.check_player_exists(this.user.discord_id)){
+            let load_register = require("../commands/register.js");
+            let register = new load_register(this.database, this.message, true);
+            register.set_user_data({name: this.user.name, discord_id: this.user.discord_id});
             register.run();
+
+            this.message.channel.send(`<@${this.user.discord_id}> You don't seem to exist in my database...\nI've registered you ony our behalf, try the command again!`);
         } else {
             await this.launch_casino(this.mode);
         }
