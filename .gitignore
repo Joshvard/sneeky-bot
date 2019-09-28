@@ -1,3 +1,4 @@
 /node_modules
 .vscode
 /includes/config.json
+/documents/todo.txt
