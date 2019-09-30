@@ -34,17 +34,37 @@ class Cmd{
     // Similar behaviour for command handling
     // The first parameter found should always be the 'secondary command' (mode) followed by the parameters required
     async launch_gear(mode){
+
+        let data = {
+            codename: "",
+            screenshot: "",
+            score: ""
+        };
+
+        data.codename = this.params[0];
+        data.screenshot = this.params[1];
+
+        if(check_optional_params([2], this.params)){
+            data.score = this.params[2];
+        }
+        
         switch(mode){
             case 'upload':
-                this.gear.upload(this.user);
+                try{
+                    this.command.check_params(2, this.params);
+                } catch(error){
+                    this.message.channel.send(error);
+                }
+                
+                this.gear.upload(this.user, data);
                 break;
 
             case 'download':
-                this.gear.download(this.user);
+                this.gear.download(this.user, data);
                 break;
 
             case 'update':
-                this.gear.update(this.user);
+                this.gear.update(this.user, data);
                 break;
 
             default:
