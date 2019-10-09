@@ -1,1 +1,2 @@
 09-10-2019 -  Clean up try/catches (Joshua)
+09-10-2019 -  Create a more flexible optional parameter check method (Joshua)
