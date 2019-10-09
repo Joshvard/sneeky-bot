@@ -38,7 +38,7 @@ class Cmd{
         let data = {
             codename: "",
             screenshot: "",
-            score: ""
+            score: null
         };
 
         data.codename = this.params[0];
