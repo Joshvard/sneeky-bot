@@ -32,7 +32,7 @@ class Cmd{
         }
 
         try{
-            let result = await this.database.db_query(this.connection, `SELECT users_id FROM users WHERE users_discord_id = ${this.user.discord_id}`);
+            let result = await this.database.db_query(this.connection, `SELECT id FROM users WHERE users_discord_id = ${this.user.discord_id}`);
 
             if(result.length > 0){
                 if(!this.suppress){

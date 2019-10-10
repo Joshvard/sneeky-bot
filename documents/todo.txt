@@ -1,2 +1,3 @@
 09-10-2019 -  Clean up try/catches (Joshua)
 09-10-2019 -  Create a more flexible optional parameter check method (Joshua)
+09-10-2019 -  Inheritance for duplicated methods in casino.js and gear.js, e.g. check_player_exists (Joshua)

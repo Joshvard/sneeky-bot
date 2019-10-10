@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS casino(
 	id INT AUTO_INCREMENT,
-    casino_users_discord_id INT,
-    casino_credits INT,
+    users_discord_id VARCHAR(32),
+    casino_credits BIGINT,
     PRIMARY KEY (id)
 ) ENGINE=INNODB;
 

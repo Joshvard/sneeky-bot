@@ -40,16 +40,16 @@ class Cmd{
             screenshot: "",
             score: null
         };
-
-        data.codename = this.params[0];
-        data.screenshot = this.params[1];
-
-        if(check_optional_params([2], this.params)){
-            data.score = this.params[2];
-        }
         
         switch(mode){
             case 'upload':
+                data.codename = this.params[0];
+                data.screenshot = this.params[1];
+
+                if(typeof(this.params[2]) !== 'undefined' && this.command.check_optional_params([2], this.params)){
+                    data.score = this.params[2];
+                }
+
                 try{
                     this.command.check_params(2, this.params);
                 } catch(error){
@@ -60,6 +60,15 @@ class Cmd{
                 break;
 
             case 'download':
+                data.codename = this.params[0];
+                data.screenshot = this.params[1];
+
+                try{
+                    this.command.check_params(1, this.params);
+                } catch(error){
+                    this.message.channel.send(error);
+                }
+
                 this.gear.download(this.user, data);
                 break;
 
@@ -76,7 +85,9 @@ class Cmd{
     // Run and execute the appropriate gear command if valid
     // Or else we terminate the command and hopefully explain why
     async run(){
-        if(!await this.gear.check_player_exists(this.user.discord_id)){
+        let player_exists = await this.gear.check_player_exists(this.user.discord_id);
+
+        if(!player_exists){
             let load_register = require("../commands/register.js");
             let register = new load_register(this.database, this.message, true);
             register.set_user_data({name: this.user.name, discord_id: this.user.discord_id});

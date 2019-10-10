@@ -51,7 +51,7 @@ class Cmd{
 
                     if(Number.isInteger(bet)){
                         if(bet <= 0){
-                            throw `<@${this.user.discord_id}> You must bet over 0 to play!\nIf you have no money, ask a friend for a donation or use &scavenge (On a cooldown).`;
+                            throw `<@${this.user.discord_id}> You must bet over 0 to play!\nIf you have no money, ask a friend for a donation or use &casino scavenge (On a cooldown).`;
                         }
                     } else {
                         throw `<@${this.user.discord_id}> Your parameters are incorrect!\nThe correct use of this command is &casino play (*numerical value you wish to bet*)`;
@@ -84,7 +84,9 @@ class Cmd{
     // Run and execute the appropriate casino command if valid
     // Or else we terminate the command and hopefully explain why
     async run(){
-        if(!await this.casino.check_player_exists(this.user.discord_id)){
+        let player_exists = await this.casino.check_player_exists(this.user.discord_id);
+
+        if(!player_exists){
             let load_register = require("../commands/register.js");
             let register = new load_register(this.database, this.message, true);
             register.set_user_data({name: this.user.name, discord_id: this.user.discord_id});
