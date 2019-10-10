@@ -7,7 +7,7 @@ class Cmd {
 
     async run(){
         if(this.message.author.id === this.command.config.author.id){
-            this.message.channel.send("Wha... wha... yo yo I'm awake, I swear!");
+//            this.message.channel.send("Wha... wha... yo yo I'm awake, I swear!");
         }
     }
 }

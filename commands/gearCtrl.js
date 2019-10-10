@@ -48,12 +48,15 @@ class Cmd{
 
                 if(typeof(this.params[2]) !== 'undefined' && this.command.check_optional_params([2], this.params)){
                     data.score = this.params[2];
+                    this.params.pop();
                 }
 
                 try{
-                    this.command.check_params(2, this.params);
+                    this.command.check_parameters(2, this.params);
                 } catch(error){
                     this.message.channel.send(error);
+
+                    return false;
                 }
                 
                 this.gear.upload(this.user, data);
@@ -64,9 +67,11 @@ class Cmd{
                 data.screenshot = this.params[1];
 
                 try{
-                    this.command.check_params(1, this.params);
+                    this.command.check_parameters(1, this.params);
                 } catch(error){
                     this.message.channel.send(error);
+
+                    return false;
                 }
 
                 this.gear.download(this.user, data);

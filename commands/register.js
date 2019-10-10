@@ -26,7 +26,7 @@ class Cmd{
         try{
             this.connection = await this.database.db_connect();
         } catch(error){
-            this.message.channel.send(`There was a problem with the database connection, please contact the bot administrator.`);
+//            this.message.channel.send(`There was a problem with the database connection, please contact the bot administrator.`);
             console.log(error);
             return false;
         }
@@ -36,13 +36,13 @@ class Cmd{
 
             if(result.length > 0){
                 if(!this.suppress){
-                    this.message.channel.send(`<@${this.user.discord_id}> You already exist in the system.`);
+//                    this.message.channel.send(`<@${this.user.discord_id}> You already exist in the system.`);
                 }
 
                 return false;
             }
         } catch(error){
-            this.message.channel.send('There was a problem with the database operation, please contact the bot administrator.');
+//            this.message.channel.send('There was a problem with the database operation, please contact the bot administrator.');
             console.log(error);
             return false;
         }
@@ -57,10 +57,10 @@ class Cmd{
             )`);
 
             if(!this.suppress){
-                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
+//                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
             }
         } catch(error){
-            this.message.channel.send(`Insertion query executed with a failure: ${error}`);
+//            this.message.channel.send(`Insertion query executed with a failure: ${error}`);
             return false;
         }
 
@@ -74,10 +74,10 @@ class Cmd{
             )`);
 
             if(!this.suppress){
-                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
+//                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
             }
         } catch(error){
-            this.message.channel.send(`Insertion query executed with a failure: ${error}`);
+//            this.message.channel.send(`Insertion query executed with a failure: ${error}`);
             return false;
         }
     }
