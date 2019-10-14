@@ -16,15 +16,15 @@ class ProgramHandler{
     }
 
     // Initialise the bot, wake her up!
-    init(){
-        this.client.login(this.config.token);
-
+    async init(){
         try{
-            this.database.test_connection();
+            await this.database.test_connection();
         } catch(error){
-            console.log(error.message);
+            console.log(error);
+            process.exit();
         }
 
+        this.client.login(this.config.token);
         this.client.once('ready', () => {
             console.log('Ready!');
         });
@@ -43,7 +43,7 @@ class ProgramHandler{
             if(message.content.startsWith(this.config.prefix) && message.content.length !== 1 && message.author.id !== this.config.client.id){
                 message.content.replace(this.config.prefix,'');
                 if(this.config.testmode && message.author.id !== "161585838508081153"){
-                    message.channel.send("You're not Rive, bye bye :D");
+//                    message.channel.send("You're not the admin, bye bye :D");
                 } else{
                     this.commands.launch_command(message.content.replace(this.config.prefix, ''), message);
                 }
