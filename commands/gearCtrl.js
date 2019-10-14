@@ -78,6 +78,22 @@ class Cmd{
                 break;
 
             case 'update':
+                data.codename = this.params[0];
+                data.screenshot = this.params[1];
+
+                if(typeof(this.params[2]) !== 'undefined' && this.command.check_optional_params([2], this.params)){
+                    data.score = this.params[2];
+                    this.params.pop();
+                }
+
+                try{
+                    this.command.check_parameters(2, this.params);
+                } catch(error){
+                    this.message.channel.send(error);
+
+                    return false;
+                }
+
                 this.gear.update(this.user, data);
                 break;
 
