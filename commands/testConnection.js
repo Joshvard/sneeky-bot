@@ -10,7 +10,7 @@ class Cmd {
             try{
                 await this.command.database.test_connection();
             } catch(error){
-//                this.message.channel.send(`Database error: ${error}`);
+                console.log(error);
             }
         }
     }

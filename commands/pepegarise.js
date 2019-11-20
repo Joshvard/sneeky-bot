@@ -33,10 +33,10 @@ class Cmd {
 
         if(args){
             await this.pepegarise(args).then((pepegarised_str) => {
-//                this.message.channel.send(`<@${this.message.author.id}> ${pepegarised_str}`);
+                this.message.channel.send(`<@${this.message.author.id}> ${pepegarised_str}`);
             }); 
         } else {
-//            this.message.channel.send(`There was an error with your parameters!\nUse '${this.command.config.prefix}help' to find out how to use this command.`)
+            this.message.channel.send(`There was an error with your parameters!\nUse '${this.command.config.prefix}help' to find out how to use this command.`)
         }
     }
 }
