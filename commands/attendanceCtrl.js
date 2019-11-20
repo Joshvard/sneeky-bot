@@ -36,22 +36,26 @@ class Cmd{
     async launch_attendance(mode){
 
         let data = {
-            codename: "",
-            screenshot: "",
-            score: null
+            author: "",
+            screenshot: ""
         };
         
         switch(mode){
             case 'signup':
+                this.attendance.signup(this.user);
                 break;
 
             case 'signout':
+                this.attendance.signout(this.user);
+                break;
+
+            case 'late':
                 break;
 
             case 'vacation':
                 break;
 
-            case 'set':
+            case 'proof':
                 break;
 
             case 'data':

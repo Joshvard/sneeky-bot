@@ -3,3 +3,5 @@
 09-10-2019 -  Inheritance for duplicated methods in casino.js and gear.js, e.g. check_player_exists (Joshua)
 10-10-2019 -  Make user data global?
 14-10-2019 -  All database operation errors should be logged to the server instead (Joshua)
+20-11-2019 -  Turn database connection attempts into a function?
+20-11-2019 -  IMPORTANT: Create a global registration method for each dataset within the register class
