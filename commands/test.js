@@ -1,3 +1,8 @@
+/**
+ * Bot ping
+ * 
+ * Make sure it isn't being lazy...
+ */
 class Cmd {
 
     constructor(command, message){

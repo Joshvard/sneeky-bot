@@ -1,4 +1,11 @@
 
+/*
+    Package designed to handle gear upload operations
+    Here the controller object will be passed different gear commands and execute them with the gear object
+    During the runtime of this object, the gear parameters should be handled and failed in a delicate manner -
+    - if applicable
+*/
+
 class Cmd{
 
     constructor(command, message, database){

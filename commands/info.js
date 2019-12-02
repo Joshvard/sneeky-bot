@@ -1,3 +1,9 @@
+/**
+ * Command module
+ * 
+ * Provides feedback to the caller of this command with basic discord information of themself.
+ */
+
 class Cmd {
 
     constructor(message){

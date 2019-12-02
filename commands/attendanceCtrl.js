@@ -1,3 +1,8 @@
+/**
+ * Command module
+ * 
+ * UNDER CONSTRUCTION
+ */
 
 class Cmd{
 

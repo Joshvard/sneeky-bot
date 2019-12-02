@@ -1,3 +1,9 @@
+/**
+ * Command module
+ * 
+ * Returns a given string with alternating upper and lower case characters - LiKe ThIs
+ */
+
 class Cmd {
 
     constructor(command, message){

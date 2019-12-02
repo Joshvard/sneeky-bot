@@ -1,3 +1,12 @@
+/*
+    Package designed to handle registration
+    Here we will provide a means to give a new user access to functionality with the bot, and log them into the database for further interaction!
+
+    All bot operations should use this module to register an unknown user, and should handle such an interaction here.
+
+    During the runtime of this object, the register parameters should be handled and failed in a delicate manner -
+    - if applicable
+*/
 
 class Cmd{
 
@@ -24,23 +33,17 @@ class Cmd{
 
         try{
             this.connection = await this.database.db_connect();
+            let result = await this.database.db_query(this.connection, `SELECT users_id FROM users WHERE users_discord_id = ${this.user.discord_id}`);
         } catch(error){
             console.log(error);
             return false;
         }
 
-        try{
-            let result = await this.database.db_query(this.connection, `SELECT users_id FROM users WHERE users_discord_id = ${this.user.discord_id}`);
-
-            if(result.length > 0){
-                if(!this.suppress){
-                    this.message.channel.send(`<@${this.user.discord_id}> You already exist in the system.`);
-                }
-
-                return false;
+        if(result.length > 0){
+            if(!this.suppress){
+                this.message.channel.send(`<@${this.user.discord_id}> You already exist in the system.`);
             }
-        } catch(error){
-            console.log(error);
+
             return false;
         }
 
@@ -52,13 +55,13 @@ class Cmd{
                 "${this.message.author.username}",
                 ${this.message.author.id}
             )`);
-
-            if(!this.suppress){
-                this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
-            }
         } catch(error){
             console.log(error);
             return false;
+        }
+
+        if(!this.suppress){
+            this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
         }
 
         try{
@@ -69,13 +72,13 @@ class Cmd{
                 ${this.message.author.id},
                 500
             )`);
-
-            if(!this.suppress){
-               this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
-            }
         } catch(error){
             console.log(error);
             return false;
+        }
+
+        if(!this.suppress){
+           this.message.channel.send(`<@${this.user.discord_id}> You have successfully been registered!`);
         }
     }
 
