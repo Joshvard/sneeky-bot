@@ -1,3 +1,7 @@
+/**
+ * Basic database connection test object
+ */
+
 class Cmd {
 
     constructor(command, message){

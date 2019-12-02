@@ -4,7 +4,6 @@
     Here the controller object will be passed different casino commands and execute them with the casino object
     During the runtime of this object, the casino parameters should be handled and failed in a delicate manner -
     - if applicable
-    Automatic registration is included in this module
 */
 
 class Cmd{

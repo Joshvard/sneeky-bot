@@ -18,8 +18,10 @@ class ProgramHandler{
     // Initialise the bot, wake her up!
     async init(){
         try{
+            // Check for a database connection
             await this.database.test_connection();
         } catch(error){
+            // Database connection failed, handle this occurance here
             console.log(error);
             process.exit();
         }
@@ -43,8 +45,8 @@ class ProgramHandler{
             if(message.content.startsWith(this.config.prefix) && message.content.length !== 1 && message.author.id !== this.config.client.id){
                 message.content.replace(this.config.prefix,'');
                 if(this.config.testmode && message.author.id !== "161585838508081153"){
-//                    message.channel.send("You're not the admin, bye bye :D");
-                } else{
+                    message.channel.send("I am currently under maintainance or being tested!");
+                } else {
                     this.commands.launch_command(message.content.replace(this.config.prefix, ''), message);
                 }
             }
