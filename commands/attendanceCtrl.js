@@ -34,7 +34,6 @@ class Cmd{
     // Similar behaviour for command handling
     // The first parameter found should always be the 'secondary command' (mode) followed by the parameters required
     async launch_attendance(mode){
-
         let data = {
             author: "",
             screenshot: ""
@@ -42,14 +41,23 @@ class Cmd{
         
         switch(mode){
             case 'signup':
-                this.attendance.signup(this.user);
+                this.attendance.signings(this.user, 'sign_up');
                 break;
 
             case 'signout':
-                this.attendance.signout(this.user);
+                this.attendance.signings(this.user, 'sign_out');
                 break;
 
             case 'late':
+                data.author = this.params[0];
+                data.screenshot = this.params[1];
+
+                if(typeof(this.params[2]) !== 'undefined' && this.command.check_optional_params([2], this.params)){
+                    data.score = this.params[2];
+                    this.params.pop();
+                }
+
+                this.attendance.set_late(this.user, data);
                 break;
 
             case 'vacation':

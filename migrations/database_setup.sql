@@ -2,21 +2,21 @@ CREATE TABLE IF NOT EXISTS users(
 	users_id INT AUTO_INCREMENT,
     users_name VARCHAR(32),
     users_discord_id VARCHAR(32),
-    users_role_group INT,
+    role_group_id INT,
     PRIMARY KEY (users_id)
 ) ENGINE=INNODB;
 
-CREATE TABLE IF NOT EXISTS role(
-	role_id INT AUTO_INCREMENT,
-    role_name VARCHAR(50),
-    PRIMARY KEY (id)
+CREATE TABLE IF NOT EXISTS role_group(
+	role_group_id INT AUTO_INCREMENT,
+    role_group_name VARCHAR(50),
+    PRIMARY KEY (role_group_id)
 ) ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS casino(
 	casino_id INT AUTO_INCREMENT,
     users_discord_id VARCHAR(32),
     casino_credits BIGINT,
-    PRIMARY KEY (role_id)
+    PRIMARY KEY (casino_id)
 ) ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS gear(
