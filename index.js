@@ -1,5 +1,5 @@
 /**
- * Sneeky Bot - Beta!
+ * Sneeky Bot - Beta 0.9.0!
  */
 
  // Load the disord bot node.js API
